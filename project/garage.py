@@ -2,6 +2,8 @@ import re
 
 
 garage = [None] * 11
+temp = []
+temp2 = []
 
 
 def push(car):
@@ -17,12 +19,15 @@ def pop():
     j = 0
     while j < len(garage):
         if garage[j] == None:
+            i = garage[j-1]
             del garage[j-1]
             break
         elif j == 9:
+            i = garage[j]
             del garage[j]
             break
         j += 1
+    return i
 
 
 def empty():
@@ -57,11 +62,6 @@ def garage_checker(license):
         j += 1
 
 
-def reverse_list():
-    reversed = temp_garage.reverse
-    return reversed
-
-
 def parking(license):
     matched = re.match(
         "[A-Z][A-Z][A-Z][A-Z][-][0-9][0-9][-][0-9][0-9][0-9]", license)
@@ -92,21 +92,18 @@ def retrieving(license, stats):
     if len(license) != 12:
         is_match = False
 
-    top1 = top()
-    i = 0
     if is_match is True:
         print("\nLicense plate number correct.\n")
         if stats == 0:
             print("Garage empty!")
-        elif stats <= 10:
+        elif stats <= 10 and license in garage:
             print("Retrieving...\n")
-            while i < len(garage):
-                if top1 == license:
-                    pop()
-                    break
-                elif garage[i-1] == license:
-                    garage.remove(license)
-                i += 1
+            while license in garage:
+                temp1 = pop()
+                temp.append(temp1)
+            temp.reverse()
+            temp.pop(0)
+            garage.extend(temp)
             print("Completed! Good Bye!")
         else:
             print("Car not in garage!")
