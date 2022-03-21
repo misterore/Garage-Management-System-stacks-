@@ -25,12 +25,41 @@ def pop():
         j += 1
 
 
+def empty():
+    for cars in garage:
+        if not None:
+            print("Garage not empty")
+            break
+    else:
+        print("Garage empty")
+    pass
+
+
+def top():
+    # mark the top of the stack
+    j = 0
+    while j < len(garage):
+        if garage[j] == None:
+            top = garage[j-1]
+            break
+        elif j == 9:
+            top = garage[j]
+        j += 1
+    print(top)
+    return top
+
+
 def garage_checker(license):
     j = 0
     while j < len(garage):
         if license == garage[j]:
             return True
         j += 1
+
+
+def reverse_list():
+    reversed = temp_garage.reverse
+    return reversed
 
 
 def parking(license):
@@ -62,16 +91,22 @@ def retrieving(license, stats):
     is_match = bool(matched)
     if len(license) != 12:
         is_match = False
-    i = 0
 
+    top1 = top()
+    i = 0
     if is_match is True:
         print("\nLicense plate number correct.\n")
         if stats == 0:
             print("Garage empty!")
         elif stats <= 10:
             print("Retrieving...\n")
-            while license in garage:
-                pop()
+            while i < len(garage):
+                if top1 == license:
+                    pop()
+                    break
+                elif garage[i-1] == license:
+                    garage.remove(license)
+                i += 1
             print("Completed! Good Bye!")
         else:
             print("Car not in garage!")
