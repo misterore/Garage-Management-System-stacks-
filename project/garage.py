@@ -112,11 +112,13 @@ def retrieving(license, top):
         # pop the first item which is the car to be deleted
         temp.pop(0)
 
-        # add new array to the end of the garage
+        # add new array to garage
         for i in temp:
             temp_top = push(i, retrieving_top)
             retrieving_top = temp_top
             # print(retrieving_top)
+
+        # clear the new array
         temp.clear()
         print("Completed! Good Bye!")
         return retrieving_top
