@@ -26,16 +26,6 @@ def pop(top):
         return item, top
 
 
-def empty():
-    for cars in garage:
-        if not None:
-            print("Garage not empty")
-            break
-    else:
-        print("Garage empty")
-    pass
-
-
 def garage_checker(license):
     # print(license)
     checker = False
