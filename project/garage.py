@@ -3,21 +3,20 @@ import re
 
 max_length = 10
 garage = [None] * 11
-temp = []
-temp2 = []
+second_garage = [None] * 11
 
 
-def push(car, top):
+def push(array, car, top):
     # print(top)
     # if top is provided
     if (top + 1) < max_length:
         top = top + 1
-        if garage[top] == None:
-            garage[top] = car
+        if array[top] == None:
+            array[top] = car
     return top
 
 
-def pop(top):
+def pop(garage, top):
     item = None
     if garage[top] != None:
         item = garage[top]
@@ -46,6 +45,12 @@ def check_license(license):
     return is_match
 
 
+def empty(garage):
+    for car in garage:
+        if not None:
+            car = None
+
+
 def parking(license, top):
     # print(top)
     parking_top = top
@@ -66,50 +71,57 @@ def parking(license, top):
         print("Parking...\n")
 
         # call the push function to add the car to the garage
-        top_from_push = push(license, parking_top)
+        top_from_push = push(garage, license, parking_top)
         print("Completed! See you soon.")
         return top_from_push
 
 
 def retrieving(license, top):
+    second_top = -1
+
     # check if the car is already registered in the garage
     garage_check = garage_checker(license)
     retrieving_top = top
 
-    j = 0
     print("\nLicense plate number correct.\n")
 
     # if license is in garage
     if garage_check == True:
         print("Retrieving...\n")
+        # print(retrieving_top)
 
         # while car is in the garage
         while license in garage:
             # pop car at the top
-            item, pop_top = pop(retrieving_top)
+            item, pop_top = pop(garage, retrieving_top)
             # print(item)
             # print(pop_top)
 
-            # add car at the top to a new array
-            temp.append(item)
-
             # change top value
             retrieving_top = pop_top
+            # print(second_garage)
+            # print(second_top)
+            # add car at the top to a new array
+            top_from_push = push(second_garage, item, second_top)
+            second_top = top_from_push
+            # print(second_top)
+            # print(second_garage)
+
             # print(retrieving_top)
             # reverse the array
-        temp.reverse()
-
-        # pop the first item which is the car to be deleted
-        temp.pop(0)
-
-        # add new array to garage
-        for i in temp:
-            temp_top = push(i, retrieving_top)
-            retrieving_top = temp_top
-            # print(retrieving_top)
+        x, n = pop(second_garage, second_top)
+        second_top = n
+        for item in second_garage:
+            if item is not None:
+                item, pop_top = pop(second_garage, second_top)
+                second_top = pop_top
+                # print(item)
+                top_from_push = push(garage, item, retrieving_top)
+                retrieving_top = top_from_push
+                # print(retrieving_top)
 
         # clear the new array
-        temp.clear()
+        empty(second_garage)
         print("Completed! Good Bye!")
         return retrieving_top
     else:
