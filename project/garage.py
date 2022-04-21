@@ -1,6 +1,3 @@
-from re import I
-
-
 stack = []
 
 
@@ -21,24 +18,31 @@ def pop(top):
 
 def main():
     while 1:
-        word = input("\nInput Word: ").lower()
+        word1 = False
+        while word1 is False:
+            print("\nInput only alphabets.")
 
-        reversed_str = ''
-        top = -1
+            word = input("\nInput Word: ").lower()
+            word1 = word.isalpha()
 
-        for i in range(len(word)):
-            push_top = push(word[i], top)
-            top = push_top
+        if word1 is True:
 
-        for i in range(len(stack)):
-            word1, top1 = pop(top)
-            reversed_str += word1
-            top = top1
+            reversed_str = ''
+            top = -1
 
-        if reversed_str == word:
-            print("\nWord is a palindrome")
-        else:
-            print("\nWord not a palindrome")
+            for i in range(len(word)):
+                push_top = push(word[i], top)
+                top = push_top
+
+            for i in range(len(stack)):
+                word1, top1 = pop(top)
+                reversed_str += word1
+                top = top1
+
+            if reversed_str == word:
+                print("\nWord is a palindrome")
+            else:
+                print("\nWord not a palindrome")
 
 
 main()
